@@ -7,17 +7,11 @@ export function EditPage(props) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
-    const[image, setImage] = useState('');
     const history = useHistory();
 
-    useEffect(() => {
-        const image = galleryService.getOneImage(props.match.params.id)
-        if (image){
-            setImage(image);
-        } else{
-            setImage('');
-        }
-    },[])
+
+    const image = galleryService.getOneImage(props.match.params.id)
+
 
 
     console.log(image)
