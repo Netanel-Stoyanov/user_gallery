@@ -2,7 +2,6 @@ import {authApi} from "../../service/AuthenticatedApiService";
 import {GalleryItemModule} from "../../module/GalleryItemModule";
 import {Subject} from "rxjs";
 
-const dataWasChange = new Subject();
 const redirect = new Subject();
 
 export const addImage = (image) => {
@@ -28,12 +27,12 @@ export const deleteImage = (imageId) => {
 
 export const getAllImage = (images) => {
     return {
-        type: "IMAGE/DELETE",
+        type: "IMAGE/GET",
         payload: images,
     };
 };
 
-export const getData = () => (dispatch, getState) => {
+export const getData = () => (dispatch) => {
         authApi.get("http://localhost:8089/gallery")
             .then((response) => {
                const galleryItems = response.data.map((item) => new GalleryItemModule(item._id,
