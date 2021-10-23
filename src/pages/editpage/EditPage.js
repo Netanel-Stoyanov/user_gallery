@@ -1,26 +1,30 @@
-import galleryService from "../../service/GalleryService";
+
 import {useHistory} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
+import {editImageInDb, getOneImageFromDb, setDescription, setTitle, setUrl} from "../../redux/actions";
+import {connect} from "react-redux";
 
-export function EditPage(props) {
 
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [url, setUrl] = useState('');
+function EditPage(props) {
+
     const history = useHistory();
 
+    useEffect(() => {
+        getOneImageFromDb(props.match.params.id);
+        props.setTitle(props.oneImage.title)
+        props.setDescription(props.oneImage.description)
+        props.setUrl(props.oneImage.url)
+    },[])
 
-    const image = galleryService.getOneImage(props.match.params.id)
-
-
-
-    console.log(image)
     const onSubmit = () => {
+        let title = props.title;
+        let description = props.description;
+        let url = props.url;
         const img = {
             title, description, url
         }
         try {
-            galleryService.editImage(props.match.params.id, img)
+            props.editImageInDb(props.match.params.id, img)
             history.push('/')
         } catch (e) {
             console.error(e)
@@ -33,25 +37,47 @@ export function EditPage(props) {
             <div className="form-group">
                 <label>Title</label>
                 <input type="text" onChange={(event => {
-                    setTitle(event.target.value)
+                    props.setTitle(event.target.value)
                 })} className="form-control"
-                value={image ? image.title: ""}/>
+                value={props.title}/>
 
             </div>
             <div className="form-group">
                 <label>Description</label>
-                <input type="text" onChange={(event => {setDescription(event.target.value)
+                <input type="text" onChange={(event => {props.setDescription(event.target.value)
                 })}   className="form-control"
-                value={description}/>
+                value={props.description}/>
             </div>
             <div className="form-group">
                 <label>URL</label>
                 <input type="text" onChange={(event => {
-                    setUrl(event.target.value)
+                    props.setUrl(event.target.value)
                 })} className="form-control"
-                       value={url} />
+                       value={props.url} />
             </div>
             <button type="submit" className="btn btn-primary mt-3">Edit Image</button>
         </form>
     )
 }
+
+const mapStateToProp = (state) => {
+    return {
+        galleryImage: state.galleryImage,
+        oneImage: state.oneImage,
+        title: state.title,
+        description: state.description,
+        url: state.url
+    };
+};
+
+const mapDispatchActions = () => {
+    return {
+        getOneImageFromDb,
+        editImageInDb,
+        setTitle,
+        setDescription,
+        setUrl
+    };
+};
+
+export const EditPageConnection = connect(mapStateToProp, mapDispatchActions())(EditPage);

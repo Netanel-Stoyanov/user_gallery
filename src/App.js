@@ -5,16 +5,16 @@ import {BrowserRouter, Route, useHistory} from "react-router-dom";
 import {LoginPage} from "./pages/loginpage/LoginPage";
 import {RegisterPage} from "./pages/registerpage/RegisterPage";
 import {DefaultPage} from "./pages/deafultpage/DefaultPage";
-import {GalleryView} from "./ui/galleryview/GalleryView";
-import {useEffect, useState} from "react";
-import galleryService from "./service/GalleryService";
-import {AddPage} from "./pages/addpage/AddPage";
-import {EditPage} from "./pages/editpage/EditPage";
+import {GalleryViewPageConnection} from "./ui/galleryview/GalleryView";
+import {useEffect} from "react";
+import {AddPageConnection} from "./pages/addpage/AddPage";
+import {EditPageConnection} from "./pages/editpage/EditPage";
 import {LogOutService} from "./service/LogOutService";
+import {connect} from "react-redux";
+import {getData, deleteImageFromDb, getRedirect} from "./redux/actions";
 
-function App() {
+function App(props) {
 
-    const [galleryItems, setGalleryItems] = useState([]);
     const history = useHistory();
     const logout = new LogOutService();
 
@@ -22,35 +22,32 @@ function App() {
     const onGalleryCardAction = (cardId, buttonType) => {
         if (buttonType === "EDIT") {
             history.push("/card/edit/" + cardId);
-            console.log(galleryItems)
-        } else if (buttonType === "DELETE"){
-            galleryService.deleteImage(cardId);
+        } else if (buttonType === "DELETE") {
+            props.deleteImageFromDb(cardId);
             history.push('/image/view')
         }
     };
 
 
     useEffect(() => {
-        galleryService.getDataWasChanged().subscribe((data) => {
-            if (data === "GET") {
-                setGalleryItems(galleryService.getData());
-            } else if (data === "ADD") {
+        props.getRedirect().subscribe((data) => {
+            if (data === "ADD") {
                 history.push('/image/view');
             }
         })
-        galleryService.getData();
-    }, [history])
+        props.getData();
+    }, [history, props])
 
     const onMenuClick = (buttonType) => {
         if (buttonType === "ADD") {
-            if (localStorage.getItem('token')){
+            if (localStorage.getItem('token')) {
                 history.push("/image/add");
             } else {
                 alert("please login")
                 history.push('/login')
             }
         } else if (buttonType === "VIEW") {
-            if (localStorage.getItem('token')){
+            if (localStorage.getItem('token')) {
                 history.push("/image/view");
             } else {
                 alert("please login")
@@ -77,19 +74,32 @@ function App() {
                     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '60px'}}>
                         <Route path="/login" exact component={LoginPage}/>
                         <Route path="/register" exact component={RegisterPage}/>
-                        <Route path="/image/add" exact component={AddPage}/>
-                        <Route path="/card/edit/:id" exact component={EditPage}/>
+                        <Route path="/image/add" exact component={AddPageConnection}/>
+                        <Route path="/card/edit/:id" exact component={EditPageConnection}/>
                     </div>
                     <Route path="/" exact component={DefaultPage}/>
                     <Route path="/image/view" exact>
-                        <GalleryView onGalleryCardAction={onGalleryCardAction} galleryItems={galleryItems}>
-                        </GalleryView>
+                        <GalleryViewPageConnection onGalleryCardAction={onGalleryCardAction}/>
                     </Route>
-
-                    </div>
+                </div>
             </BrowserRouter>
         </div>
     );
 }
 
-export default App;
+const mapStateToProp = (state) => {
+    return {
+        galleryImage: state.galleryImage,
+        oneImage: state.oneImage
+    };
+};
+
+const mapDispatchActions = () => {
+    return {
+        getData,
+        deleteImageFromDb,
+        getRedirect
+    };
+};
+
+export default connect(mapStateToProp, mapDispatchActions())(App);

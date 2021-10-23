@@ -1,7 +1,8 @@
 import {useState} from "react";
 import {useHistory} from "react-router-dom";
-import galleryService from "../../service/GalleryService";
 import {AddImageModule} from "../../module/AddImageModule";
+import { connect } from "react-redux";
+import {addImageToDb} from "../../redux/actions";
 
 export function AddPage(props) {
 
@@ -16,7 +17,7 @@ export function AddPage(props) {
     const onAddSubmit = (event) => {
         event.preventDefault();
         try {
-            galleryService.addImage(newImage);
+            props.addImageToDb(newImage);
             history.push('/');
         } catch (e) {
             console.log(e)
@@ -45,3 +46,19 @@ export function AddPage(props) {
         </form>
     )
 }
+const mapStateToProp = (state) => {
+    return {
+        galleryImage: state.galleryImage,
+        oneImage: state.oneImage
+    };
+};
+
+const mapDispatchActions = () => {
+    return {
+        addImageToDb
+    };
+};
+export const AddPageConnection = connect(
+    mapStateToProp,
+    mapDispatchActions()
+)(AddPage);

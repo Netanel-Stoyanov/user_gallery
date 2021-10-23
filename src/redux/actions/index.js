@@ -39,6 +39,27 @@ export const getOneImage = (image) => {
     };
 };
 
+export const setTitle = (title) => {
+    return {
+        type: "TITLE",
+        payload: title,
+    };
+};
+
+export const setDescription = (description) => {
+    return {
+        type: "DESCRIPTION",
+        payload: description,
+    };
+};
+
+export const setUrl = (url) => {
+    return {
+        type: "URL",
+        payload: url,
+    };
+};
+
 export const getData = () => (dispatch) => {
         authApi.get("http://localhost:8089/gallery")
             .then((response) => {
@@ -56,13 +77,14 @@ export const addImageToDb = (img) => (dispatch) => {
         .then((response) => {
             const newImage = response.data;
             dispatch(addImage(newImage))
+            redirect.next("ADD")
         }).catch((err) => {
         console.error(err);
         redirect.next("LOGIN");
     })
 }
 
-const deleteImageFromDb = (id) => (dispatch) => {
+export const deleteImageFromDb = (id) => (dispatch) => {
     authApi.delete("http://localhost:8089/gallery/" + id)
         .then((response) => {
             dispatch(deleteImage(id));
@@ -74,10 +96,25 @@ const deleteImageFromDb = (id) => (dispatch) => {
 export const editImageInDb = (id, img) => (dispatch) => {
     authApi.put("http://localhost:8089/gallery/" + id, img)
         .then((response) => {
-            dispatch(editImage(id, img))
+            if (response === 'updated') {
+                dispatch(editImage(id, img))
+            }
+            else {
+                throw new Error("something go wrong");
+            }
             console.log(response)
         }).catch((err) => {
         console.error(err);
+    })
+}
+
+export const getOneImageFromDb = (id) => (dispatch) => {
+    authApi.get("http://localhost:8089/gallery/" + id)
+        .then((response) => {
+            dispatch(getOneImage(response.data))
+        }).catch((err) => {
+        console.error(err);
+        this.redirect.next("LOGIN")
     })
 }
 

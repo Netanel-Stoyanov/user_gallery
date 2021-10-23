@@ -20,7 +20,47 @@ const galleryImageReducer = (currentState = [], action) => {
     }
 };
 
+const oneImageReducer = (image = null , action) => {
+    switch (action.type){
+        case "IMAGE/GET/ONE":
+            return action.payload;
+        default:
+            return image;
+    }
+}
+
+const titleReducer = (title = null, action) => {
+    switch (action.type){
+        case "TITLE" :
+            return action.type;
+        default :
+            return title;
+    }
+}
+
+const descriptionReducer = (description = null, action) => {
+    switch (action.type){
+        case "DESCRIPTION" :
+            return action.type;
+        default :
+            return description;
+    }
+}
+
+const urlReducer = (url = null, action) => {
+    switch (action.type){
+        case "URL" :
+            return action.type;
+        default :
+            return url;
+    }
+}
+
 export default combineReducers({
     galleryImage: galleryImageReducer,
+    oneImage: oneImageReducer,
+    title: titleReducer,
+    description: descriptionReducer,
+    url: urlReducer
 });
 
