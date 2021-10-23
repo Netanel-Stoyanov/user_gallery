@@ -7,6 +7,9 @@ function EditPage(props) {
 
     const history = useHistory();
 
+    //this is in the first time render is undefined and i dont know why
+    //so i can't set props.setTitle(oneImage.title)
+    //look for the next comments down below
     const oneImage = props.galleryImage.find(image => image.id === props.match.params.id);
 
     console.log(oneImage)
@@ -33,6 +36,17 @@ function EditPage(props) {
                 <input type="text" onChange={(event => {
                     props.setTitle(event.target.value)
                 })} className="form-control"
+                       //in the first time when you click edit value should
+                    //be as the image that im got from the array
+                    //and if im set the props up in the useEfect
+                    //when im trying to set some value in the input
+                    //its rerender the component because the on change
+                    //on the input setTitle and then its always re put the image value
+                    //that im got from the reducer state
+                    //please look how the action and the reducer works
+                    //i can't understand why the first time the image is undefined
+                    //so i can't use useEfect to set the title only in the first time
+                    //Also about the rest inputs in the component
                 value={props.title}/>
 
             </div>

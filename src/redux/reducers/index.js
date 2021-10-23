@@ -23,7 +23,7 @@ const galleryImageReducer = (currentState = [], action) => {
 const titleReducer = (title = null, action) => {
     switch (action.type){
         case "TITLE" :
-            return action.type;
+            return action.payload;
         default :
             return title;
     }
@@ -32,7 +32,7 @@ const titleReducer = (title = null, action) => {
 const descriptionReducer = (description = null, action) => {
     switch (action.type){
         case "DESCRIPTION" :
-            return action.type;
+            return action.payload;
         default :
             return description;
     }
@@ -41,7 +41,7 @@ const descriptionReducer = (description = null, action) => {
 const urlReducer = (url = null, action) => {
     switch (action.type){
         case "URL" :
-            return action.type;
+            return action.payload;
         default :
             return url;
     }

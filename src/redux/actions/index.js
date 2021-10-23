@@ -96,12 +96,7 @@ export const deleteImageFromDb = (id) => (dispatch) => {
 export const editImageInDb = (id, img) => (dispatch) => {
     authApi.put("http://localhost:8089/gallery/" + id, img)
         .then((response) => {
-            if (response === 'updated') {
-                dispatch(editImage(id, img))
-            }
-            else {
-                throw new Error("something go wrong");
-            }
+            dispatch(editImage(id, img))
             console.log(response)
         }).catch((err) => {
         console.error(err);
