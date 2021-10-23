@@ -32,6 +32,13 @@ export const getAllImage = (images) => {
     };
 };
 
+export const getOneImage = (image) => {
+    return {
+        type: "IMAGE/GET/ONE",
+        payload: image,
+    };
+};
+
 export const getData = () => (dispatch) => {
         authApi.get("http://localhost:8089/gallery")
             .then((response) => {

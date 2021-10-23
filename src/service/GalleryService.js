@@ -41,9 +41,6 @@ class GalleryService {
         return this.dataWasChange.asObservable();
     }
 
-    getRedirect = () => {
-        return this.redirect.asObservable();
-    }
 
     addImage = (img) => {
         authApi.post("http://localhost:8089/gallery", img)
