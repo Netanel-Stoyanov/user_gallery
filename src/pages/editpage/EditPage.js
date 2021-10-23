@@ -1,5 +1,5 @@
 import {useHistory} from "react-router-dom";
-import {editImageInDb, getOneImageFromDb, setDescription, setTitle, setUrl} from "../../redux/actions";
+import {editImageInDb, setDescription, setTitle, setUrl} from "../../redux/actions";
 import {connect} from "react-redux";
 
 
