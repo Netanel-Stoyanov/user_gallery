@@ -108,15 +108,6 @@ export const editImageInDb = (id, img) => (dispatch) => {
     })
 }
 
-export const getOneImageFromDb = (id) => (dispatch) => {
-    authApi.get("http://localhost:8089/gallery/" + id)
-        .then((response) => {
-            dispatch(getOneImage(response.data))
-        }).catch((err) => {
-        console.error(err);
-        this.redirect.next("LOGIN")
-    })
-}
 
 export const getRedirect = () => {
     return redirect.asObservable();

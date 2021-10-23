@@ -1,7 +1,9 @@
 import {GalleryCard} from "../gallerycard/GalleryCard";
 import {connect} from "react-redux";
+import {getData} from "../../redux/actions";
 
 export function GalleryView(props) {
+
     const createGalleryCards = () => {
         let items = props.galleryImage;
         let newItems = [];
@@ -76,6 +78,7 @@ const mapStateToProp = (state) => {
 
 const mapDispatchActions = () => {
     return {
+        getData
     };
 };
 

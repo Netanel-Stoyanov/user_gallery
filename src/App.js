@@ -6,17 +6,22 @@ import {LoginPage} from "./pages/loginpage/LoginPage";
 import {RegisterPage} from "./pages/registerpage/RegisterPage";
 import {DefaultPage} from "./pages/deafultpage/DefaultPage";
 import {GalleryViewPageConnection} from "./ui/galleryview/GalleryView";
-import {useEffect} from "react";
 import {AddPageConnection} from "./pages/addpage/AddPage";
 import {EditPageConnection} from "./pages/editpage/EditPage";
 import {LogOutService} from "./service/LogOutService";
 import {connect} from "react-redux";
-import {getData, deleteImageFromDb, getRedirect} from "./redux/actions";
+import {deleteImageFromDb, getData} from "./redux/actions";
+import {useEffect} from "react";
+
 
 function App(props) {
 
     const history = useHistory();
     const logout = new LogOutService();
+
+    useEffect(() => {
+        props.getData()
+    },[])
 
 
     const onGalleryCardAction = (cardId, buttonType) => {
@@ -28,15 +33,6 @@ function App(props) {
         }
     };
 
-
-    useEffect(() => {
-        props.getRedirect().subscribe((data) => {
-            if (data === "ADD") {
-                history.push('/image/view');
-            }
-        })
-        props.getData();
-    }, [history, props])
 
     const onMenuClick = (buttonType) => {
         if (buttonType === "ADD") {
@@ -86,7 +82,6 @@ function App(props) {
         </div>
     );
 }
-
 const mapStateToProp = (state) => {
     return {
         galleryImage: state.galleryImage,
@@ -97,9 +92,12 @@ const mapStateToProp = (state) => {
 const mapDispatchActions = () => {
     return {
         getData,
-        deleteImageFromDb,
-        getRedirect
+        deleteImageFromDb
     };
 };
 
-export default connect(mapStateToProp, mapDispatchActions())(App);
+
+export const ConnectedApp = connect(mapStateToProp, mapDispatchActions())(App);
+
+
+export default App;

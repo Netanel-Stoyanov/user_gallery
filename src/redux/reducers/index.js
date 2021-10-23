@@ -20,15 +20,6 @@ const galleryImageReducer = (currentState = [], action) => {
     }
 };
 
-const oneImageReducer = (image = null , action) => {
-    switch (action.type){
-        case "IMAGE/GET/ONE":
-            return action.payload;
-        default:
-            return image;
-    }
-}
-
 const titleReducer = (title = null, action) => {
     switch (action.type){
         case "TITLE" :
@@ -58,7 +49,6 @@ const urlReducer = (url = null, action) => {
 
 export default combineReducers({
     galleryImage: galleryImageReducer,
-    oneImage: oneImageReducer,
     title: titleReducer,
     description: descriptionReducer,
     url: urlReducer

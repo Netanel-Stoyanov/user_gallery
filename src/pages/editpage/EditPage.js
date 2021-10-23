@@ -1,6 +1,4 @@
-
 import {useHistory} from "react-router-dom";
-import {useEffect} from "react";
 import {editImageInDb, getOneImageFromDb, setDescription, setTitle, setUrl} from "../../redux/actions";
 import {connect} from "react-redux";
 
@@ -9,13 +7,9 @@ function EditPage(props) {
 
     const history = useHistory();
 
-    useEffect(() => {
-        getOneImageFromDb(props.match.params.id);
-        props.setTitle(props.oneImage.title)
-        props.setDescription(props.oneImage.description)
-        props.setUrl(props.oneImage.url)
-    },[])
+    const oneImage = props.galleryImage.find(image => image.id === props.match.params.id);
 
+    console.log(oneImage)
     const onSubmit = () => {
         let title = props.title;
         let description = props.description;
@@ -72,7 +66,6 @@ const mapStateToProp = (state) => {
 
 const mapDispatchActions = () => {
     return {
-        getOneImageFromDb,
         editImageInDb,
         setTitle,
         setDescription,
