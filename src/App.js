@@ -26,10 +26,13 @@ function App(props) {
                 "USER_SECRETE_KEY", (err, decode) => {
                     if (err) {
                         localStorage.removeItem('token');
+                        history.push('/login')
                     } else {
                         if ((decode.exp * 1000) < Date.now()) {
                             localStorage.removeItem('token');
+                            history.push('/login')
                         } else {
+                            console.log(decode)
                             props.getData()
                         }
                     }
