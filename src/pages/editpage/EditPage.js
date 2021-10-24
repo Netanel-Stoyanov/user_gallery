@@ -9,6 +9,11 @@ function EditPage(props) {
 
     const oneImage = props.galleryImage.find(image => image.id === props.match.params.id);
 
+    //can't use useEfect because the first time one image is undefined
+    //please read the comments down below
+    props.setTitle(oneImage?oneImage.title: "")
+    props.setDescription(oneImage?oneImage.description: "")
+    props.setUrl(oneImage?oneImage.url: "")
 
     console.log(oneImage)
     const onSubmit = () => {
@@ -27,36 +32,33 @@ function EditPage(props) {
         }
     }
 
-    const onSubmitValue = (event, valueType) => {
-        if (valueType === "title") {
-            props.setTitle(event.target.value);
-        } else if (valueType === "description"){
-            props.setDescription(event.target.value);
-        } else if (valueType === "url"){
-            props.setUrl(event.target.value);
-        }
-    }
 
     return (
         <form onSubmit={onSubmit}>
             <div className="form-group">
                 <label>Title</label>
-                {/* can't edit the input value  */}
-                <input type="text" onSubmit={(event => {onSubmitValue(event)})} className="form-control"
-                       value={oneImage? oneImage.title : ""}/>
+                {/* can't edit the input value
+                 because im using setTitle and its render the component
+                 and set the value to the one image properties*/}
+                <input type="text" onChange={(event => {props.setTitle(event.target.value)})} className="form-control"
+                       value={props.title}/>
 
             </div>
             <div className="form-group">
                 <label>Description</label>
-                {/* can't edit the input value  */}
-                <input type="text" onSubmit={(event => {onSubmitValue(event)})}   className="form-control"
-                value={oneImage? oneImage.description : ""}/>
+                {/* can't edit the input value
+                 because im using setTitle and its render the component
+                 and set the value to the one image properties*/}
+                <input type="text" onChange={(event => {props.setDescription(event.target.value)})}   className="form-control"
+                value={props.description}/>
             </div>
             <div className="form-group">
                 <label>URL</label>
-                {/* can't edit the input value  */}
-                <input type="text" onSubmit={(event => {onSubmitValue(event)})} className="form-control"
-                       value={oneImage? oneImage.url : ""} />
+                {/* can't edit the input value
+                 because im using setTitle and its render the component
+                 and set the value to the one image properties*/}
+                <input type="text" onChange={(event => {props.setUrl(event.target.value)})} className="form-control"
+                       value={props.url} />
             </div>
             <button type="submit" className="btn btn-primary mt-3">Edit Image</button>
         </form>
