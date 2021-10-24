@@ -11,9 +11,9 @@ function EditPage(props) {
 
     //can't use useEfect because the first time one image is undefined
     //please read the comments down below
-    props.setTitle(oneImage?oneImage.title: "")
-    props.setDescription(oneImage?oneImage.description: "")
-    props.setUrl(oneImage?oneImage.url: "")
+    props.setTitle(oneImage ? oneImage.title : "")
+    props.setDescription(oneImage ? oneImage.description : "")
+    props.setUrl(oneImage ? oneImage.url : "")
 
     console.log(oneImage)
     const onSubmit = () => {
