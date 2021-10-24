@@ -71,7 +71,6 @@ export const addImageToDb = (img) => (dispatch) => {
         .then((response) => {
             const newImage = response.data;
             dispatch(addImage(newImage))
-            redirect.next("ADD")
         }).catch((err) => {
         console.error(err);
         redirect.next("LOGIN");

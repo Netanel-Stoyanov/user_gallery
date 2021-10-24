@@ -12,6 +12,7 @@ import {LogOutService} from "./service/LogOutService";
 import {connect} from "react-redux";
 import {deleteImageFromDb, getData} from "./redux/actions";
 import {useEffect} from "react";
+import jwt from "jsonwebtoken";
 
 
 function App(props) {
@@ -20,8 +21,22 @@ function App(props) {
     const logout = new LogOutService();
 
     useEffect(() => {
-        props.getData()
-    },[])
+        if (localStorage.getItem('token')) {
+            jwt.verify(localStorage.getItem('token'),
+                "USER_SECRETE_KEY", (err, decode) => {
+                    if (err) {
+                        history.push('/login')
+                    } else {
+                        if ((decode.exp * 1000) < Date.now()) {
+                            localStorage.removeItem('token');
+                            history.push('/login')
+                        } else {
+                            props.getData()
+                        }
+                    }
+                })
+        }
+    }, [])
 
 
     const onGalleryCardAction = (cardId, buttonType) => {
@@ -82,6 +97,7 @@ function App(props) {
         </div>
     );
 }
+
 const mapStateToProp = (state) => {
     return {
         galleryImage: state.galleryImage,
