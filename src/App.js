@@ -25,11 +25,10 @@ function App(props) {
             jwt.verify(localStorage.getItem('token'),
                 "USER_SECRETE_KEY", (err, decode) => {
                     if (err) {
-                        history.push('/login')
+                        localStorage.removeItem('token');
                     } else {
                         if ((decode.exp * 1000) < Date.now()) {
                             localStorage.removeItem('token');
-                            history.push('/login')
                         } else {
                             props.getData()
                         }
