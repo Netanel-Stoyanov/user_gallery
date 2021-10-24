@@ -32,12 +32,6 @@ export const getAllImage = (images) => {
     };
 };
 
-export const getOneImage = (image) => {
-    return {
-        type: "IMAGE/GET/ONE",
-        payload: image,
-    };
-};
 
 export const setTitle = (title) => {
     return {
