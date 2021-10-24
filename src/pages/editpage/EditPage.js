@@ -15,6 +15,7 @@ function EditPage(props) {
     props.setDescription(oneImage ? oneImage.description : "")
     props.setUrl(oneImage ? oneImage.url : "")
 
+    //look at the dev Tools in the browser the log continue to the comments down below
     console.log(oneImage)
     const onSubmit = () => {
         let title = props.title;
