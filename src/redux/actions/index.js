@@ -33,24 +33,24 @@ export const getAllImage = (images) => {
 };
 
 
-export const setTitle = (title) => {
+export const setTitle = (title, imageId) => {
     return {
         type: "TITLE",
-        payload: title,
+        payload: {title, imageId}
     };
 };
 
-export const setDescription = (description) => {
+export const setDescription = (description, imageId) => {
     return {
         type: "DESCRIPTION",
-        payload: description,
+        payload: {description, imageId}
     };
 };
 
-export const setUrl = (url) => {
+export const setUrl = (url, imageId) => {
     return {
         type: "URL",
-        payload: url,
+        payload: {url, imageId}
     };
 };
 

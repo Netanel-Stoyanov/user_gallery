@@ -15,42 +15,26 @@ const galleryImageReducer = (currentState = [], action) => {
             return newGalleryArray;
         case "IMAGE/GET":
             return action.payload;
-        default:
+        case "TITLE" :
+            let editedTitle = currentState.find(x => x.id === action.payload.imageId);
+            editedTitle.title = action.payload.title;
+            return [...currentState];
+        case "DESCRIPTION" :
+            let editedDescription = currentState.find(x => x.id === action.payload.imageId);
+            editedDescription.description = action.payload.description;
+            return [...currentState];
+        case "URL" :
+            let editedUrl = currentState.find(x => x.id === action.payload.imageId);
+            editedUrl.url = action.payload.url;
+            return [...currentState];
+            default:
             return currentState;
     }
 };
 
-const titleReducer = (title = null, action) => {
-    switch (action.type){
-        case "TITLE" :
-            return action.payload;
-        default :
-            return title;
-    }
-}
 
-const descriptionReducer = (description = null, action) => {
-    switch (action.type){
-        case "DESCRIPTION" :
-            return action.payload;
-        default :
-            return description;
-    }
-}
-
-const urlReducer = (url = null, action) => {
-    switch (action.type){
-        case "URL" :
-            return action.payload;
-        default :
-            return url;
-    }
-}
 
 export default combineReducers({
-    galleryImage: galleryImageReducer,
-    title: titleReducer,
-    description: descriptionReducer,
-    url: urlReducer
+    galleryImage: galleryImageReducer
 });
 
