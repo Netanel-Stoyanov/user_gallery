@@ -32,23 +32,26 @@ function EditPage(props) {
                 <label>Title</label>
                 <input type="text" onChange={(event => {
                     event.preventDefault();
-                    props.setTitle(event.target.value, props.match.params.id)})} className="form-control"
-                       value={oneImage?oneImage.title:""}/>
+                    props.setTitle(event.target.value, props.match.params.id)
+                })} className="form-control"
+                       value={oneImage ? oneImage.title : ""}/>
 
             </div>
             <div className="form-group">
                 <label>Description</label>
                 <input type="text" onChange={(event => {
                     event.preventDefault();
-                    props.setDescription(event.target.value,props.match.params.id)})}   className="form-control"
-                       value={oneImage?oneImage.description:""}/>
+                    props.setDescription(event.target.value, props.match.params.id)
+                })} className="form-control"
+                       value={oneImage ? oneImage.description : ""}/>
             </div>
             <div className="form-group">
                 <label>URL</label>
                 <input type="text" onChange={(event => {
                     event.preventDefault();
-                    props.setUrl(event.target.value, props.match.params.id)})} className="form-control"
-                       value={oneImage?oneImage.url:""} />
+                    props.setUrl(event.target.value, props.match.params.id)
+                })} className="form-control"
+                       value={oneImage ? oneImage.url : ""}/>
             </div>
             <button type="submit" className="btn btn-primary mt-3">Edit Image</button>
         </form>

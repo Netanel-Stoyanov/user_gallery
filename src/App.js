@@ -23,7 +23,7 @@ function App(props) {
     useEffect(() => {
         if (localStorage.getItem('token')) {
             jwt.verify(localStorage.getItem('token'),
-                "USER_SECRETE_KEY", (err, decode) => {
+                process.env.REACT_APP_USER_SECRET_KEY, (err, decode) => {
                     if (err) {
                         localStorage.removeItem('token');
                         history.push('/login')

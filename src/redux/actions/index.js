@@ -32,7 +32,6 @@ export const getAllImage = (images) => {
     };
 };
 
-
 export const setTitle = (title, imageId) => {
     return {
         type: "TITLE",
@@ -55,15 +54,15 @@ export const setUrl = (url, imageId) => {
 };
 
 export const getData = () => (dispatch) => {
-        authApi.get("http://localhost:8089/gallery")
-            .then((response) => {
-               const galleryItems = response.data.map((item) => new GalleryItemModule(item._id,
-                    item.title, item.url, item.description));
-                dispatch(getAllImage(galleryItems));
-            }).catch((err) => {
-            console.error(err);
-            redirect.next("LOGIN")
-        })
+    authApi.get("http://localhost:8089/gallery")
+        .then((response) => {
+            const galleryItems = response.data.map((item) => new GalleryItemModule(item._id,
+                item.title, item.url, item.description));
+            dispatch(getAllImage(galleryItems));
+        }).catch((err) => {
+        console.error(err);
+        redirect.next("LOGIN")
+    })
 }
 
 export const addImageToDb = (img) => (dispatch) => {
